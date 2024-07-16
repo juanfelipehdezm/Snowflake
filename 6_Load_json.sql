@@ -41,4 +41,14 @@ SELECT
     RAW_FILE:first_name::STRING as first_name,
     RAW_FILE:job.salary::int as salary,
     RAW_FILE:job.title::string as title
+FROM ORDERS_DB.PUBLIC.JSON_RAW; 
+
+--arrays with in nested data
+SELECT
+    RAW_FILE:first_name::STRING as first_name,
+    array_size(RAW_FILE:spoken_languages)::int as number_of_languages,
+    RAW_FILE:spoken_languages  as spoken_languages
 FROM ORDERS_DB.PUBLIC.JSON_RAW;
+
+
+

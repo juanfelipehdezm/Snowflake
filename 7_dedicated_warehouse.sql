@@ -1,0 +1,34 @@
+-- create a dedicated virtual warehouse for data scientis and DBA 
+
+--data scientis 
+CREATE WAREHOUSE DS_WH
+    WITH 
+    WAREHOUSE_SIZE = 'SMALL'
+    WAREHOUSE_TYPE = 'STANDARD'
+    AUTO_SUSPEND = 300
+    AUTO_RESUME = TRUE 
+    MIN_CLUSTER_COUNT = 1
+    MAX_CLUSTER_COUNT = 1
+    SCALING_POLICY = 'STANDARD';
+
+--DBA
+CREATE WAREHOUSE DBA_WH
+    WITH WAREHOUSE_SIZE = 'XSMALL'
+    WAREHOUSE_TYPE = 'STANDARD'
+    AUTO_SUSPEND = 300
+    AUTO_RESUME = TRUE 
+    MIN_CLUSTER_COUNT = 1
+    MAX_CLUSTER_COUNT = 1
+    SCALING_POLICY = 'STANDARD';
+
+
+--creating rol for data scientis and granting access to the warehouse
+CREATE ROLE DATA_SCIENTIS;
+GRANT USAGE ON WAREHOUSE DS_WH TO DATA_SCIENTIS;
+
+--user to who we are going to assing the new rols
+CREATE USER DS1 PASSWORD='DS1' LOGIN_NAME = 'DS1' DEFAULT_ROLE = 'DATA_SCIENTIS' DEFAULT_WAREHOUSE = 'DS_WH';
+GRANT ROLE DATA_SCIENTIS TO USER DS1;
+
+
+
