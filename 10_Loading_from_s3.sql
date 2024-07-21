@@ -29,17 +29,17 @@ CREATE OR REPLACE FILE FORMAT MANAGE_BD.FILE_FORMAT.CSV_FILEFORMAT
     empty_field_as_null = TRUE,
     FIELD_OPTIONALLY_ENCLOSED_BY = '"';
 
- // Create stage object with integration object & file format object
+-- Create stage object with integration object & file format object
 CREATE OR REPLACE stage MANAGE_BD.EXTERNAL_STAGES.S3_MOVIE
     URL = 's3://snow-flake-demoproject/csv/'
     STORAGE_INTEGRATION = S3_AWS
     FILE_FORMAT = MANAGE_BD.FILE_FORMAT.CSV_FILEFORMAT;
 
 
-// Use Copy command       
+-- Use Copy command       
 COPY INTO MOVIES.PUBLIC.movie_titles
     FROM @MANAGE_BD.EXTERNAL_STAGES.S3_MOVIE;
-
+--select data
 SELECT *
 FROM MOVIES.PUBLIC.movie_titles;
     
