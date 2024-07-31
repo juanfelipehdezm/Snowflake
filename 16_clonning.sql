@@ -1,0 +1,18 @@
+USE DATABASE EMPLOYEE_DB;
+USE SCHEMA PUBLIC;
+USE ROLE ACCOUNTADMIN;
+USE WAREHOUSE COMPUTE_WH;
+
+---clone a table
+CREATE TABLE EMPLOYEES_CLONE
+CLONE EMPLOYEES;
+
+
+select * from employees_clone;
+
+---clone a database and schemas
+CREATE SCHEMA PUBLIC_CLONE
+CLONE PUBLIC;
+
+DROP SCHEMA PUBLIC_CLONE;
+-- it works the same for databases

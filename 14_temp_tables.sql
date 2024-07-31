@@ -1,0 +1,31 @@
+USE DATABASE EMPLOYEE_DB;
+USE SCHEMA PUBLIC;
+USE ROLE ACCOUNTADMIN;
+USE WAREHOUSE COMPUTE_WH;
+
+
+---------------------transient table-------
+
+CREATE OR REPLACE TRANSIENT TABLE TRANSIANT_employees(
+    id int,
+    first_name STRING,
+    last_name string
+    );
+
+INSERT INTO TRANSIANT_EMPLOYEES
+SELECT id, first_name, last_name FROM EMPLOYEES;
+
+SHOW TABLES;
+
+
+SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.TABLE_STORAGE_METRICS
+WHERE TABLE_CATALOG = 'EMPLOYEE_DB'; 
+
+-----------------------temporary tables
+
+CREATE TEMP TABLE temp_employee AS 
+    SELECT * 
+    FROM TRANSIANT_employees;
+
+
+SELECT * FROM TEMP_EMPLOYEE
