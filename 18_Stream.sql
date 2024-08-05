@@ -20,10 +20,10 @@ CREATE OR REPLACE TABLE Sales_raw_staging(
 INSERT INTO sales_raw_staging
     VALUES
     (1, 'Banana', 1.99,1,1),
-    (1, 'Lemon', 0.99,1,1),
-    (1, 'Apple', 1.79,1,2),
-    (1, 'Orange Juice', 1.89,1,2),
-    (1, 'Cereals', 4.99,2,1);
+    (2, 'Lemon', 0.99,1,1),
+    (3, 'Apple', 1.79,1,2),
+    (4, 'Orange Juice', 1.89,1,2),
+    (5, 'Cereals', 4.99,2,1);
 
 --store table
 CREATE OR REPLACE TABLE STORE_TABLE(
@@ -81,6 +81,13 @@ DESC STREAM sales_stream;
 -- AS IT is new, nothing should be inside the stream
 SELECT * FROM sales_stream;
 
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+----------------------------INSERT ...----------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+
+
 --inserting new data
 INSERT INTO sales_raw_staging
     VALUES
@@ -110,4 +117,27 @@ INSERT INTO sales_final_table
 SELECT * FROM sales_final_table;
 SELECT * FROM sales_stream;
 
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+----------------------------UPDATE ...----------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+UPDATE sales_raw_staging
+SET PRODUCT ='Potato' WHERE PRODUCT = 'Banana';
+
+MERGE INTO sales_final_table as sf
+USING sales_stream as ss
+ ON sf.id = ss.id
+WHEN matched
+    AND ss.METADATA$ACTION = 'INSERT'
+    AND ss.METADATA$ISUPDATE = 'TRUE'
+    THEN UPDATE
+    SET sf.product = ss.product,
+        sf.price = ss.price,
+        sf.amount = ss.amount,
+        sf.store_id = ss.store_id;
+
+
+SELECT * FROM sales_final_table;
+SELECT * FROM sales_stream;
 
