@@ -141,3 +141,27 @@ WHEN matched
 SELECT * FROM sales_final_table;
 SELECT * FROM sales_stream;
 
+----parameters and retention time
+
+show parameters in table sales_raw_staging;
+
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+----------------------------DELETE ...----------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+DELETE FROM sales_raw_staging
+WHERE PRODUCT = 'Lemon';
+
+--CHECK stream
+SELECT * FROM sales_stream;
+
+--deleting
+DELETE FROM sales_final_table
+WHERE id = (SELECT ID FROM sales_stream
+            WHERE METADATA$ACTION = 'DELETE'
+            AND METADATA$ISUPDATE = 'FALSE');
+
+SELECT * FROM sales_final_table;
+
+
