@@ -43,3 +43,10 @@ COPY INTO ORDERS_DB.PUBLIC.ORDERS
     files = ('OrderDetails.csv');
 
 
+
+ -- Copy command with pattern for file names
+
+ COPY INTO OUR_FIRST_DB.PUBLIC.ORDERS
+     FROM @MANAGE_DB.external_stages.aws_stage
+     file_format = (type = csv field_delimiter=',' skip_header=1)
+     pattern = '.*Order.*';
