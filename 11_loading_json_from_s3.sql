@@ -42,7 +42,7 @@ CREATE OR REPLACE TABLE MOVIES.PUBLIC.REVIEWS (
 );
 
 
-// Copy transformed data into destination table
+--Copy transformed data into destination table
 COPY INTO MOVIES.PUBLIC.REVIEWS
     FROM (SELECT 
             $1:asin::STRING as ASIN,
@@ -63,5 +63,5 @@ COPY INTO MOVIES.PUBLIC.REVIEWS
 
 
     
-// Validate results
+-- Validate results
 SELECT * FROM MOVIES.PUBLIC.REVIEWS ;
