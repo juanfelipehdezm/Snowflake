@@ -44,10 +44,11 @@ SELECT
 FROM ORDERS_DB.PUBLIC.JSON_RAW; 
 
 --arrays with in nested data
+--if there is an array of data we can slice it [0]
 SELECT
     RAW_FILE:first_name::STRING as first_name,
     array_size(RAW_FILE:spoken_languages)::int as number_of_languages,
-    RAW_FILE:spoken_languages  as spoken_languages
+    RAW_FILE:spoken_languages[0]  as spoken_languages
 FROM ORDERS_DB.PUBLIC.JSON_RAW;
 
 
