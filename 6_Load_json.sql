@@ -51,5 +51,12 @@ SELECT
     RAW_FILE:spoken_languages[0]  as spoken_languages
 FROM ORDERS_DB.PUBLIC.JSON_RAW;
 
+--FLATTEN fuction 
+SELECT
+    RAW_FILE:id::int as id,
+    RAW_FILE:first_name::string as firs_name,
+    VALUE::string as prev_company
+FROM JSON_RAW , TABLE (FLATTEN(input => RAW_FILE:prev_company));
+
 
 
